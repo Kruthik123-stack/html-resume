@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RESUME DEVELOPER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #343a40;
+            text-align: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        header {
+            background: linear-gradient(135deg, #495057, #6c757d);
+            color: white;
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        header.dark-mode {
+            background: linear-gradient(135deg, #2c2f36, #434848);
+        }
+        .btn {
+            background: #17a2b8;
+            color: white;
+            padding: 14px 22px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .btn.dark-mode {
+            background: #4caf50;
+        }
+        .resume-container {
+            max-width: 700px;
+            margin: 100px auto 30px;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            text-align: left;
+            transition: background-color 0.3s;
+        }
+        .resume-container.dark-mode {
+            background: #333;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 14px;
+            margin: 5px 0;
+            border: 2px solid #adb5bd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        body.dark-mode input, body.dark-mode textarea {
+            background-color: #444;
+            color: #e0e0e0;
+            border-color: #666;
+        }
+        .hidden {
+            display: none;
+        }
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #5e5e5e;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            z-index: 2000; 
+        }
+        .dark-mode-toggle:hover {
+            background: #333;
+        }
+        .dark-mode-toggle:focus {
+            outline: none;
+        }
+        #full-name {
+            text-transform: capitalize;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>RESUME DEVELOPER</h1>
+    </header>
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+
+    <section id="resume">
+        <h2>Build Your Resume</h2>
+        <div class="resume-container">
+            <form id="resume-form">
+                <div class="input-group">
+                    <label for="full-name">Full Name</label>
+                    <input type="text" id="full-name"  required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                 <div class="input-group">
+                    <label for="linkedin">Linked-In ID</label>
+                    <input type="text" id="linkedin" required>
+                </div>
+                <div class="input-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" required>
+                </div>
+                <div class="input-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="number" id="phone"  required>
+                </div>
+                <div class="input-group">
+                    <label for="languages">Languages</label>
+                    <textarea id="languages" placeholder="Ex: Java, Python, JavaScript, C++" required></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="technologies">Technologies/Frameworks</label>
+                    <textarea id="technologies" placeholder="Ex: React.js, Node.js, Django, Spring Boot" required></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="coursework">Coursework Undergraduate</label>
+                    <textarea id="coursework" placeholder="Ex: Data Structures, Machine Learning, Operating Systems" required></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="experience">Work Experience</label>
+                    <textarea id="experience" placeholder="Ex: Software Engineer at XYZ Company (2022-Present)..." required></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="projects">Projects</label>
+                    <textarea id="projects" placeholder="Ex: PROJECT NAME - Built using React and Node.js..." required></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="education">Education Details</label>
+                    <textarea id="education" placeholder="B.Tech in Computer Science, ABC University, YYYY" required></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="achievements">Achievements</label>
+                    <textarea id="achievements" placeholder="Won 1st place in XYZ Hackathon, Published research on AI..." required></textarea>
+                </div>
+                <button type="button" class="btn" onclick="generateResume()">Generate Resume</button>
+            </form>
+            
+        </div>
+        
+        <div class="resume-container hidden" id="resume-output">
+            <h2>Generated Resume</h2>
+            <div id="resume-content"></div>
+            <button type="button" class="btn hidden" id="download-btn" onclick="downloadResume()">Download as PDF</button>
+        </div>
+    </section>
+
+    <script>
+        function generateResume() {
+            const fields = ["full-name", "email", "phone", "languages", "technologies", "coursework", "experience", "projects", "education", "achievements"];
+            let resumeHTML = "";
+            
+            fields.forEach(id => {
+                let value = document.getElementById(id).value.trim();
+                if (value) {
+                    resumeHTML += `<h3>${id.replace("-", " ").toUpperCase()}</h3>`;
+                    resumeHTML += `<hr style='margin-bottom: 10px;'>`;
+                    resumeHTML += `<p>${value.replace(/\n/g, "<br>")}</p>`;
+                }
+            });
+            
+            document.getElementById("resume-content").innerHTML = resumeHTML;
+            document.getElementById("resume-output").classList.remove("hidden");
+            document.getElementById("download-btn").classList.remove("hidden");
+        }
+
+        function downloadResume() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    function drawBorder() {
+        doc.setLineWidth(1);
+        doc.rect(5, 5, 200, 287);
+    }
+
+    drawBorder();
+
+    doc.setFontSize(26);
+    doc.setFont("Garamond", "bold");
+    doc.text(document.getElementById("full-name").value, 105, 20, { align: "center" });
+
+    let yPos = 38; 
+    doc.setFontSize(14);
+    doc.setFont("Garamond", "bold");
+    doc.text("Email:", 10, yPos);
+    doc.setFontSize(12);
+    doc.setFont("Garamond", "normal");
+    doc.text(document.getElementById("email").value, 26, yPos);
+    doc.setFontSize(14);
+    doc.setFont("Garamond", "bold");
+    doc.text("LinkedIn:", 90, yPos);
+    doc.setFontSize(12);
+    doc.setFont("Garamond", "normal");
+    doc.text(document.getElementById("linkedin").value, 112, yPos);
+
+    yPos += 4;
+    doc.setLineWidth(0.2);
+    doc.line(10, yPos, 200, yPos);
+    yPos += 8; 
+    doc.setFontSize(14);
+    doc.setFont("Garamond", "bold");
+    doc.text("Phone:", 10, yPos);
+    doc.setFontSize(12);
+    doc.setFont("Garamond", "normal");
+    doc.text(document.getElementById("phone").value, 26, yPos);
+    doc.setFontSize(14);
+    doc.setFont("Garamond", "bold");
+    doc.text("Address:", 90, yPos);
+    doc.setFontSize(12);
+    doc.setFont("Garamond", "normal");
+    doc.text(document.getElementById("address").value, 111, yPos);
+
+    yPos += 4; 
+    doc.setLineWidth(0.2);
+    doc.line(10, yPos, 200, yPos);
+    yPos += 8; 
+    doc.setFontSize(14);
+    doc.setFont("Garamond", "bold");
+    doc.text("TECHNICAL SKILLS", 10, yPos);
+    yPos += 4;
+    doc.setLineWidth(0.1);
+    doc.line(10, yPos, 200, yPos);
+    yPos += 5; 
+
+    doc.setFontSize(12);
+
+    function addInlineSubsection(title, content) {
+        doc.setFont("Garamond", "bold");
+        let titleWidth = doc.getTextWidth(`${title}: `);
+        doc.text(`${title}:`, 10, yPos);
+        
+        doc.setFont("Garamond", "normal");
+        let splitText = doc.splitTextToSize(content, 180 - titleWidth); 
+
+        if (splitText.length > 1) {
+            doc.text(splitText[0], 10 + titleWidth, yPos); 
+            yPos += 6; 
+            splitText.slice(1).forEach(line => {
+                if (yPos + 6 > doc.internal.pageSize.height - 20) { 
+                    doc.addPage();
+                    drawBorder();
+                    yPos = 20;
+                }
+                doc.text(line, 10, yPos);
+                yPos += 6; 
+            });
+        } else {
+            doc.text(splitText[0], 10 + titleWidth, yPos);
+            yPos += 6; 
+        }
+    }
+
+    addInlineSubsection("Languages", document.getElementById("languages").value);
+    addInlineSubsection("Technologies/Frameworks", document.getElementById("technologies").value);
+    addInlineSubsection("Coursework", document.getElementById("coursework").value);
+
+    yPos += 4; 
+    ["experience", "projects", "education", "achievements"].forEach(id => {
+        doc.setFontSize(14);
+        doc.setFont("Garamond", "bold");
+        doc.text(id.replace(/-/g, " ").toUpperCase(), 10, yPos);
+        yPos += 4; 
+        doc.setLineWidth(0.1);
+        doc.line(10, yPos, 200, yPos);
+        yPos += 5; 
+
+        doc.setFontSize(12);
+        doc.setFont("Garamond", "normal");
+        
+        let splitText = doc.splitTextToSize(document.getElementById(id).value, 180);
+        splitText.forEach(line => {
+            if (yPos + 6 > doc.internal.pageSize.height - 20) { 
+                doc.addPage();
+                drawBorder();
+                yPos = 20;
+            }
+            doc.text(line, 10, yPos);
+            yPos += 6; 
+        });
+
+        yPos += 5;
+    });
+
+    if (yPos + 20 > doc.internal.pageSize.height - 10) {
+        doc.addPage();
+        drawBorder(); 
+        yPos = 20;
+    }
+    
+    const fullName = document.getElementById("full-name").value || "Your Name";
+    const email = document.getElementById("email").value || "your.email@example.com";
+    const phone = document.getElementById("phone").value || "+91 12345-67890";
+    const linkedIn = document.getElementById("linkedin").value || "linkedin.com/in/your-profile";
+    doc.setFontSize(12);
+    doc.text(`Contact: ${email} | ${phone}`, 105, yPos + 10, { align: "center" });
+    doc.text(`LinkedIn: ${linkedIn}`, 105, yPos + 15, { align: "center" });
+    doc.text(`© 2025 ${fullName}. All rights reserved.`, 105, yPos + 20, { align: "center" });
+
+    doc.save("resume.pdf");
+}
+
+   function toggleDarkMode() {
+    const body = document.body;
+    const header = document.querySelector("header");
+    const buttons = document.querySelectorAll(".btn");
+    const containers = document.querySelectorAll(".resume-container");
+    const darkModeToggle = document.querySelector(".dark-mode-toggle");
+
+    body.classList.toggle("dark-mode");
+    header.classList.toggle("dark-mode");
+    buttons.forEach(button => button.classList.toggle("dark-mode"));
+    containers.forEach(container => container.classList.toggle("dark-mode"));
+
+    if (body.classList.contains("dark-mode")) {
+        darkModeToggle.innerHTML = "☀️ Light Mode";
+        localStorage.setItem("darkMode", "enabled"); 
+    } else {
+        darkModeToggle.innerHTML = "🌙 Dark Mode";
+        localStorage.setItem("darkMode", "disabled"); 
+    }
+}
+
+window.onload = function () {
+    const darkModeToggle = document.querySelector(".dark-mode-toggle");
+    if (localStorage.getItem("darkMode") === "enabled") {
+        document.body.classList.add("dark-mode");
+        document.querySelector("header").classList.add("dark-mode");
+        document.querySelectorAll(".btn").forEach(button => button.classList.add("dark-mode"));
+        document.querySelectorAll(".resume-container").forEach(container => container.classList.add("dark-mode"));
+        darkModeToggle.innerHTML = "☀️ Light Mode"; 
+    } else {
+        darkModeToggle.innerHTML = "🌙 Dark Mode"; 
+    }
+};
+
+    </script>
+</body>
+</html>
