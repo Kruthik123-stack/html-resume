@@ -15,16 +15,21 @@
             color: #343a40;
             text-align: center;
             transition: background-color 0.3s, color 0.3s;
+            background-image: url('bg.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
         }
+        
         body.dark-mode {
             background-color: #121212;
             color: #e0e0e0;
         }
         header {
-            background: linear-gradient(135deg, #495057, #6c757d);
+            background: linear-gradient(135deg, 0, #6c757d);
             color: white;
             padding: 1rem 2rem;
-            position: fixed;
+            position: relative;
             width: 100%;
             top: 0;
             left: 0;
@@ -32,7 +37,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+           
         }
         header.dark-mode {
             background: linear-gradient(135deg, #2c2f36, #434848);
@@ -87,13 +92,13 @@
             display: none;
         }
         .dark-mode-toggle {
-            position: fixed;
-            top: 20px;
+            position: absolute;
+            top: 35px;
             right: 20px;
             background: #5e5e5e;
             color: white;
             padding: 12px 25px;
-            border-radius: 25px;
+            border-radius: 20px;
             font-size: 16px;
             cursor: pointer;
             transition: background 0.3s, transform 0.2s;
@@ -105,6 +110,30 @@
         .dark-mode-toggle:focus {
             outline: none;
         }
+        .resume-container {
+             width: 60%;
+             max-width: 1000px; 
+            margin: 50px auto; 
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: width 0.3s ease;
+        }
+
+      #resume-form .input-group {
+            margin-bottom: 15px;
+        }
+
+    #resume-form input,
+      #resume-form textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+       }
         #full-name {
             text-transform: capitalize;
         }
@@ -116,9 +145,7 @@
         <h1>RESUME DEVELOPER</h1>
     </header>
     <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙 Dark Mode</button>
-
     <section id="resume">
-        <h2>Build Your Resume</h2>
         <div class="resume-container">
             <form id="resume-form">
                 <div class="input-group">
@@ -232,7 +259,7 @@
     yPos += 4;
     doc.setLineWidth(0.2);
     doc.line(10, yPos, 200, yPos);
-    yPos += 8; 
+    yPos += 7; 
     doc.setFontSize(14);
     doc.setFont("Garamond", "bold");
     doc.text("Phone:", 10, yPos);
@@ -249,7 +276,7 @@
     yPos += 4; 
     doc.setLineWidth(0.2);
     doc.line(10, yPos, 200, yPos);
-    yPos += 8; 
+    yPos += 7; 
     doc.setFontSize(14);
     doc.setFont("Garamond", "bold");
     doc.text("TECHNICAL SKILLS", 10, yPos);
